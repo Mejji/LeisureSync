@@ -6,11 +6,13 @@ import 'progress_tracker.dart'; // Import the progress_tracker screen
 import 'hobby_management.dart'; // Import the calendar_screen
 import 'notification_center.dart'; // Import the notification_center screen
 import 'globals.dart';
+import 'developers.dart';
 
 
 
 class calendar_screen extends StatefulWidget {
-  const calendar_screen({super.key});
+  final String username;
+  const calendar_screen({super.key, required this.username});
 
   @override
   State<calendar_screen> createState() => _CalendarScreenState();
@@ -31,7 +33,7 @@ class _CalendarScreenState extends State<calendar_screen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -46,11 +48,11 @@ class _CalendarScreenState extends State<calendar_screen> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
                 );
               },
             ),
@@ -59,7 +61,7 @@ class _CalendarScreenState extends State<calendar_screen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) => edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -114,13 +116,13 @@ class _CalendarScreenState extends State<calendar_screen> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HobbyManagement()),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: globalUsername)),
               );
               break;
             case 3:
@@ -134,7 +136,7 @@ class _CalendarScreenState extends State<calendar_screen> {
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationCenter()),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }
