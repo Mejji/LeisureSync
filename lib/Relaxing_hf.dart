@@ -8,8 +8,12 @@ import 'list_hobbies.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
 import 'globals.dart';
+import 'developers.dart';
 
 class Relaxing_hf extends StatefulWidget {
+  final String username; // Add username parameter
+  const Relaxing_hf({super.key, required this.username});
+
   @override
   _Relaxing_hfState createState() => _Relaxing_hfState();
 }
@@ -44,7 +48,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: const Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: const CircleAvatar(
                 backgroundColor: Colors.white,
@@ -59,11 +63,11 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
                 );
               },
             ),
@@ -72,7 +76,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -229,7 +233,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HobbyManagement()),
+                            builder: (context) => HobbyManagement(username: globalUsername)),
                       );
                     },
                     child: const Text('Back'),
@@ -241,7 +245,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const list_hobbies()),
+                            builder: (context) =>  list_hobbies(username: globalUsername)),
                       );
                     }
                         : null,
@@ -295,7 +299,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
@@ -309,14 +313,14 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationCenter()),
+                    builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }
