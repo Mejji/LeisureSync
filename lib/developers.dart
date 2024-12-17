@@ -31,13 +31,8 @@ class _DevelopersState extends State<Developers> {
             UserAccountsDrawerHeader(
               accountName: Text(widget.username), // Use widget.username here
               accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('images/chillguy.png'),
               ),
               decoration: const BoxDecoration(
                 color: Color(0xFF00AFDF),
@@ -114,11 +109,11 @@ class _DevelopersState extends State<Developers> {
               ),
             ),
             const SizedBox(height: 30),
-            DeveloperTile(name: 'Mark Josh Alvear', imagePath: 'images/Alvear.png'),
+            DeveloperTile(name: 'Mark Josh Alvear', imagePath: 'images/Mj.png'),
             const SizedBox(height: 30), // Add space between developers
-            DeveloperTile(name: 'Nigel Jan L. Naniong', imagePath: 'images/Naniong.png'),
+            DeveloperTile(name: 'Nigel Jan L. Naniong', imagePath: 'images/Nigel.png'),
             const SizedBox(height: 30), // Add space between developers
-            DeveloperTile(name: 'Andrei Christian Tonido', imagePath: 'images/Tonido.png'),
+            DeveloperTile(name: 'Andrei Christian Tonido', imagePath: 'images/drei.png'),
           ],
         ),
       ),
