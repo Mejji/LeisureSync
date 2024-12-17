@@ -7,7 +7,6 @@ import 'calendar_screen.dart';
 import 'notification_center.dart';
 import 'globals.dart';
 
-
 class edit_profile extends StatefulWidget {
   final String username;
   const edit_profile({super.key, required this.username});
@@ -27,15 +26,14 @@ class _edit_profileState extends State<edit_profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Prevent resize on keyboard open
       appBar: AppBar(
         backgroundColor: Color(0xFF00AFDF),
         title: Text('Profile Page'),
-        // Adding a menu icon that will open the Drawer
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              // Open the drawer
               Scaffold.of(context).openDrawer();
             },
           ),
@@ -63,11 +61,10 @@ class _edit_profileState extends State<edit_profile> {
             ListTile(
               title: Text('Home'),
               onTap: () {
-                // Navigate to Home screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                    builder: (context) => home_screen(username: globalUsername),
                   ),
                 );
               },
@@ -75,7 +72,6 @@ class _edit_profileState extends State<edit_profile> {
             ListTile(
               title: Text('Logout'),
               onTap: () {
-                // Navigate to Login screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -100,97 +96,99 @@ class _edit_profileState extends State<edit_profile> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8, // Extend the width
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: const Text(
-                  'Profile',
-                  textAlign: TextAlign.center, // Center align the text
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 20),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _firstNameController,
-                      decoration: InputDecoration(labelText: 'First Name'),
-                    ),
-                    TextField(
-                      controller: _surnameController,
-                      decoration: InputDecoration(labelText: 'Surname'),
-                    ),
-                    TextField(
-                      controller: _genderController,
-                      decoration: InputDecoration(labelText: 'Gender'),
-                    ),
-                    TextField(
-                      controller: _hobbyController,
-                      decoration: InputDecoration(labelText: 'Hobby Interest'),
-                    ),
-                    SizedBox(height: 20),
-                    if (_errorMessage != null)
-                      Text(
-                        _errorMessage!,
-                        style: TextStyle(color: Colors.red),
+          child: SingleChildScrollView( // Added for scrolling
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
                       ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => home_screen(username: globalUsername), // Use the global variable
-                              ),
-                            );
-                          },
-                          child: Text('Back'),
+                    ],
+                  ),
+                  child: const Text(
+                    'Profile',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _firstNameController,
+                        decoration: InputDecoration(labelText: 'First Name'),
+                      ),
+                      TextField(
+                        controller: _surnameController,
+                        decoration: InputDecoration(labelText: 'Surname'),
+                      ),
+                      TextField(
+                        controller: _genderController,
+                        decoration: InputDecoration(labelText: 'Gender'),
+                      ),
+                      TextField(
+                        controller: _hobbyController,
+                        decoration: InputDecoration(labelText: 'Hobby Interest'),
+                      ),
+                      SizedBox(height: 20),
+                      if (_errorMessage != null)
+                        Text(
+                          _errorMessage!,
+                          style: TextStyle(color: Colors.red),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_firstNameController.text.isEmpty ||
-                                _surnameController.text.isEmpty ||
-                                _genderController.text.isEmpty ||
-                                _hobbyController.text.isEmpty) {
-                              setState(() {
-                                _errorMessage = "Please fill out all fields!";
-                              });
-                            } else {
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                                  builder: (context) => home_screen(username: globalUsername),
                                 ),
                               );
-                            }
-                          },
-                          child: Text('Save'),
-                        ),
-                      ],
-                    ),
-                  ],
+                            },
+                            child: Text('Back'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_firstNameController.text.isEmpty ||
+                                  _surnameController.text.isEmpty ||
+                                  _genderController.text.isEmpty ||
+                                  _hobbyController.text.isEmpty) {
+                                setState(() {
+                                  _errorMessage = "Please fill out all fields!";
+                                });
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => home_screen(username: globalUsername),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text('Save'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
