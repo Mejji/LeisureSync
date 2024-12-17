@@ -6,10 +6,12 @@ import 'home_screen.dart'; // Import the home_screen
 import 'progress_tracker.dart'; // Import the progress_tracker screen
 import 'hobby_management.dart'; // Import the calendar_screen
 import 'globals.dart';
+import 'developers.dart';
 
 
 class NotificationCenter extends StatefulWidget {
-  const NotificationCenter({super.key});
+  final String username;
+  const NotificationCenter({super.key, required this.username});
 
   @override
   State<NotificationCenter> createState() => _NotificationCenterState();
@@ -53,7 +55,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -68,11 +70,11 @@ class _NotificationCenterState extends State<NotificationCenter> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
                 );
               },
             ),
@@ -81,7 +83,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -143,13 +145,13 @@ class _NotificationCenterState extends State<NotificationCenter> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HobbyManagement()),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: globalUsername)),
               );
               break;
             case 3:
@@ -163,7 +165,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
               );
               break;
           }

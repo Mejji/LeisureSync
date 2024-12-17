@@ -7,8 +7,12 @@ import 'notification_center.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
 import 'globals.dart';
+import 'developers.dart';
 
 class TimerHobby extends StatefulWidget {
+  final String username; // Add username parameter
+  const TimerHobby({super.key, required this.username});
+
   @override
   _TimerHobbyState createState() => _TimerHobbyState();
 }
@@ -44,7 +48,7 @@ class _TimerHobbyState extends State<TimerHobby> {
     });
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => progress_tracker()),
+      MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
     );
   }
 
@@ -85,7 +89,7 @@ class _TimerHobbyState extends State<TimerHobby> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -100,11 +104,11 @@ class _TimerHobbyState extends State<TimerHobby> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
                 );
               },
             ),
@@ -113,7 +117,7 @@ class _TimerHobbyState extends State<TimerHobby> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -230,7 +234,7 @@ class _TimerHobbyState extends State<TimerHobby> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
@@ -244,13 +248,13 @@ class _TimerHobbyState extends State<TimerHobby> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationCenter()),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }

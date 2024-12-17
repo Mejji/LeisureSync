@@ -6,8 +6,11 @@ import 'notification_center.dart'; // Import the notification_center screen
 import 'login_screen.dart';
 import 'edit_profile.dart';
 import 'globals.dart';
+import 'developers.dart';
 
 class progress_tracker extends StatefulWidget {
+  final String username;
+  const progress_tracker({super.key, required this.username});
   @override
   _progress_trackerState createState() => _progress_trackerState();
 }
@@ -40,7 +43,7 @@ class _progress_trackerState extends State<progress_tracker> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -55,11 +58,11 @@ class _progress_trackerState extends State<progress_tracker> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
                 );
               },
             ),
@@ -68,7 +71,7 @@ class _progress_trackerState extends State<progress_tracker> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -174,7 +177,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HobbyManagement(),
+                  builder: (context) => HobbyManagement(username: globalUsername),
                 ),
               );
               break;
@@ -190,7 +193,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const calendar_screen(),
+                  builder: (context) =>  calendar_screen(username: globalUsername),
                 ),
               );
               break;
@@ -198,7 +201,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationCenter(),
+                  builder: (context) =>  NotificationCenter(username: globalUsername),
                 ),
               );
               break;

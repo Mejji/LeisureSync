@@ -7,9 +7,11 @@ import 'time_hobby.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
 import 'globals.dart';
+import 'developers.dart';
 
 class list_hobbies extends StatefulWidget {
-  const list_hobbies({super.key});
+  final String username;
+  const list_hobbies({super.key, required this.username});
 
   @override
   State<list_hobbies> createState() => _list_hobbiesState();
@@ -50,7 +52,7 @@ class _list_hobbiesState extends State<list_hobbies> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -65,11 +67,11 @@ class _list_hobbiesState extends State<list_hobbies> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
                 );
               },
             ),
@@ -78,7 +80,7 @@ class _list_hobbiesState extends State<list_hobbies> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -122,7 +124,7 @@ class _list_hobbiesState extends State<list_hobbies> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => TimerHobby()),
+                              MaterialPageRoute(builder: (context) => TimerHobby(username: globalUsername)),
                             );
                           },
                           child: Text('Begin Tracking'),
@@ -184,7 +186,7 @@ class _list_hobbiesState extends State<list_hobbies> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
@@ -198,13 +200,13 @@ class _list_hobbiesState extends State<list_hobbies> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationCenter()),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }
