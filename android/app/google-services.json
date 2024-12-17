@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "685436522825",
+    "project_id": "leisuresync-f8374",
+    "storage_bucket": "leisuresync-f8374.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685436522825:android:5b164d389a8323374f8a98",
+        "android_client_info": {
+          "package_name": "com.example.leisuresync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0GJ_fja828u8g0P4oBBG3TcBryBj-hA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

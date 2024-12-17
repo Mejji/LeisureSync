@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Import the HomeScreen
-import 'login_screen.dart'; // Import the LoginScreen
+import 'home_screen.dart';
+import 'login_screen.dart';
 import 'globals.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -14,13 +17,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+  TextEditingController();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _showError = false;
+  String? _errorMessage;
 
-  // Validation Functions (from your second code snippet)
+  // Validation Functions
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) return 'Required';
     if (value.length > 20) return 'Max 20 characters';
@@ -56,10 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0xFF00AFDF), // Top gradient color
-                Colors.white, // Middle gradient color
-                Colors.white, // Middle gradient color
-                Colors.white, // Bottom gradient color
+                Color(0xFF00AFDF),
+                Colors.white,
+                Colors.white,
+                Colors.white,
               ],
             ),
           ),
@@ -97,14 +102,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           controller: _usernameController,
                           label: "Username",
                           icon: Icons.person_outline,
-                          validator: _validateName, // Add validator here
+                          validator: _validateName,
                         ),
                         const SizedBox(height: 20),
                         _buildTextField(
                           controller: _emailController,
                           label: "Email",
                           icon: Icons.mail_outlined,
-                          validator: _validateEmail, // Add validator here
+                          validator: _validateEmail,
                         ),
                         const SizedBox(height: 20),
                         _buildPasswordField(
@@ -116,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _obscurePassword = !_obscurePassword;
                             });
                           },
-                          validator: _validatePassword, // Add validator here
+                          validator: _validatePassword,
                         ),
                         const SizedBox(height: 20),
                         _buildPasswordField(
@@ -130,7 +135,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             });
                           },
                           validator: (value) {
-                            // Add confirm password validator
                             if (value == null || value.isEmpty) {
                               return 'Required';
                             }
@@ -142,12 +146,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 10),
 
-                        // Error Message Below Confirm Password
-                        if (_showError)
-                          const Center(
+                        // Error Message (for both form and Firebase errors)
+                        if (_showError || _errorMessage != null)
+                          Center(
                             child: Text(
-                              "Please fill out all fields!",
-                              style: TextStyle(
+                              _errorMessage ?? "Please fill out all fields!",
+                              style: const TextStyle(
                                 color: Colors.red,
                                 fontSize: 16,
                               ),
@@ -163,23 +167,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           _showError = _usernameController.text.isEmpty ||
                               _emailController.text.isEmpty ||
                               _passwordController.text.isEmpty ||
                               _confirmPasswordController.text.isEmpty;
+                          _errorMessage = null;
                         });
 
                         if (!_showError && _formKey.currentState!.validate()) {
-                          // Navigate to HomeScreen after sign up
-                          globalUsername = _usernameController.text;
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => home_screen(username: globalUsername),
-                            ),
-                          );
+                          try {
+                            // Create user with Firebase
+                            final credential = await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+
+                            // Store username in Firestore
+                            final user = credential.user;
+                            if (user != null) {
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(user.uid)
+                                  .set({
+                                'username': _usernameController.text,
+                                // ... other user data you want to store
+                              });
+
+                              // Navigate to HomeScreen after successful sign up
+                              globalUsername = _usernameController.text;
+                              setState(() {
+                                // Wrap navigation in setState
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        home_screen(username: globalUsername),
+                                  ),
+                                );
+                              });
+                            }
+                          } on FirebaseAuthException catch (e) {
+                            setState(() {
+                              _errorMessage = e.message;
+                            });
+                          } on FirebaseException catch (e) {
+                            print("Firestore error: ${e.message}");
+                            // Handle the error (e.g., display an error message)
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -229,7 +266,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        // Navigate back to the Login screen
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -256,12 +292,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  // Utility Method: Build Text Field
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
     required IconData icon,
-    required FormFieldValidator<String> validator, // Add validator parameter
+    required FormFieldValidator<String> validator,
   }) {
     return TextFormField(
       controller: controller,
@@ -277,17 +313,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
           borderSide: BorderSide(color: Color(0xFF00AFDF)),
         ),
       ),
-      validator: validator, // Use the validator here
+      validator: validator,
     );
   }
 
-  // Utility Method: Build Password Field
+
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
     required bool obscureText,
     required VoidCallback onToggleVisibility,
-    required FormFieldValidator<String> validator, // Add validator parameter
+    required FormFieldValidator<String> validator,
   }) {
     return TextFormField(
       controller: controller,
@@ -311,11 +347,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           borderSide: BorderSide(color: Color(0xFF00AFDF)),
         ),
       ),
-      validator: validator, // Use the validator here
+      validator: validator,
     );
   }
 
-  // Utility Method: Build Social Button
+
   Widget _buildSocialButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed,

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:leisuresync/developers.dart';
 import 'globals.dart';
-import 'hobby_management.dart'; // Import the home_management screen
-import 'progress_tracker.dart'; // Import the progress_tracker screen
-import 'calendar_screen.dart'; // Import the calendar_screen
-import 'notification_center.dart'; // Import the notification_center screen
+import 'hobby_management.dart';
+import 'progress_tracker.dart';
+import 'calendar_screen.dart';
+import 'notification_center.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class home_screen extends StatefulWidget {
-  final String username; // Add username parameter
-  const home_screen({super.key, required this.username}); // Update constructor
+  final String username;
+  const home_screen({super.key, required this.username});
 
   @override
   State<home_screen> createState() => _home_screenState();
@@ -21,17 +22,17 @@ class _home_screenState extends State<home_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF00AFDF),
-        title: Text('Home'),
+        backgroundColor: const Color(0xFF00AFDF),
+        title: const Text('Home'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text(widget.username), // You might want to update this with the username as well
+              accountName: Text(widget.username),
               accountEmail: null,
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(
                   Icons.person,
@@ -39,32 +40,41 @@ class _home_screenState extends State<home_screen> {
                   color: Colors.blue,
                 ),
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFF00AFDF),
               ),
             ),
             ListTile(
-              title: Text('Developers'),
+              title: const Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
+                  MaterialPageRoute(
+                      builder: (context) => developers(
+                        username: globalUsername,
+                      )),
                 );
               },
             ),
             ListTile(
-              title: Text('Edit Profile'),
+              title: const Text('Edit Profile'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
+                  MaterialPageRoute(
+                      builder: (context) => edit_profile(
+                        username: globalUsername,
+                      )),
                 );
               },
             ),
             ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
+              title: const Text('Logout'),
+              onTap: () async {
+                // Sign out using Firebase
+                await FirebaseAuth.instance.signOut();
+                // Navigate to LoginScreen after signing out
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
@@ -91,21 +101,21 @@ class _home_screenState extends State<home_screen> {
           children: [
             Text(
               'Welcome, ${widget.username}', // Display username here
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
-            CircleAvatar(
+            const SizedBox(height: 20),
+            const CircleAvatar(
               radius: 100, // Made the CircleAvatar larger
-              backgroundColor: Colors.grey[200],
+              backgroundColor: Colors.grey,
               child: Icon(
                 Icons.person,
                 size: 70,
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "It's a brand new day full of possibilities, let's own it! Gear up, set the vibe, and make it amazing! 🎉🚀✨",
                 textAlign: TextAlign.center,
@@ -116,7 +126,7 @@ class _home_screenState extends State<home_screen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart, color: Colors.grey),
             label: '',
@@ -138,7 +148,7 @@ class _home_screenState extends State<home_screen> {
             label: '',
           ),
         ],
-        backgroundColor: Color(0xFF00AFDF),
+        backgroundColor: const Color(0xFF00AFDF),
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
@@ -147,7 +157,9 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => progress_tracker(username: globalUsername),
+                  builder: (context) => progress_tracker(
+                    username: globalUsername,
+                  ),
                 ),
               );
               break;
@@ -155,7 +167,9 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: globalUsername),
+                  builder: (context) => HobbyManagement(
+                    username: globalUsername,
+                  ),
                 ),
               );
               break;
@@ -163,7 +177,9 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  calendar_screen(username: globalUsername),
+                  builder: (context) => calendar_screen(
+                    username: globalUsername,
+                  ),
                 ),
               );
               break;
@@ -171,7 +187,9 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  NotificationCenter(username: globalUsername)),
+                    builder: (context) => NotificationCenter(
+                      username: globalUsername,
+                    )),
               );
               break;
           }
