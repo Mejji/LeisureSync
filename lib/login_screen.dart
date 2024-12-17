@@ -196,20 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildSocialButton(Icons.mail, () {}),
-                      const SizedBox(width: 20),
-                      _buildSocialButton(Icons.apple, () {}),
-                      const SizedBox(width: 20),
-                      _buildSocialButton(Icons.facebook, () {}),
-                    ],
-                  ),
-
                   const SizedBox(height: 40),
-
                   // Back to Sign Up Button
                   Center(
                     child: TextButton(
