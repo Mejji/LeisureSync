@@ -5,14 +5,11 @@ import 'calendar_screen.dart';
 import 'notification_center.dart';
 import 'hobby_management.dart';
 import 'list_hobbies.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
 import 'globals.dart';
-import 'developers.dart';
 
 class Relaxing_hf extends StatefulWidget {
-  final String username; // Add username parameter
-  const Relaxing_hf({super.key, required this.username});
+  final String username;
+  const Relaxing_hf({super.key, required this.username}); // Add username parameter
 
   @override
   _Relaxing_hfState createState() => _Relaxing_hfState();
@@ -42,54 +39,14 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
       appBar: AppBar(
         title: const Text('Relaxing Hobby'),
         backgroundColor: const Color(0xFF00AFDF),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
-              accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
-              ),
-              decoration: const BoxDecoration(
-                color: Color(0xFF00AFDF),
-              ),
-            ),
-            ListTile(
-              title: Text('Developers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
+            );
+          },
         ),
       ),
       body: Container(
@@ -233,7 +190,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HobbyManagement(username: globalUsername)),
+                            builder: (context) => HobbyManagement(username: widget.username)),
                       );
                     },
                     child: const Text('Back'),
@@ -245,7 +202,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>  list_hobbies(username: globalUsername)),
+                            builder: (context) => ListHobbies(selectedCategory: '',username: widget.username)),
                       );
                     }
                         : null,
@@ -262,7 +219,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
               if (!isFormValid)
                 const Text(
                   'Please fill out all fields to enable the save button.',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  style: TextStyle(color: Colors.red, fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
             ],
@@ -270,25 +227,25 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.bar_chart, color: Colors.grey),
+            icon: Icon(Icons.bar_chart, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
+            icon: Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.music_note, color: Colors.blue),
+            icon: Icon(Icons.groups, color: Colors.blue),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_today),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.notifications),
+            icon: Icon(Icons.notifications),
             label: '',
           ),
         ],
@@ -299,28 +256,29 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) =>
+                      home_screen(username: widget.username),
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  NotificationCenter(username: globalUsername)),
+                    builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }

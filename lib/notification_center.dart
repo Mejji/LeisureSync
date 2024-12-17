@@ -74,7 +74,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) => Developers(username: widget.username)),
                 );
               },
             ),
@@ -83,7 +83,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: widget.username)),
                 );
               },
             ),
@@ -145,27 +145,27 @@ class _NotificationCenterState extends State<NotificationCenter> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HobbyManagement(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
               );
               break;
             case 3:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) => home_screen(username: widget.username), // Use the global variable
                 ),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) =>  calendar_screen(username: widget.username)),
               );
               break;
           }

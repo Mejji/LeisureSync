@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'hobby_management.dart'; // Import the home_management screen
 import 'home_screen.dart';
@@ -62,7 +63,7 @@ class _progress_trackerState extends State<progress_tracker> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) =>  Developers(username: widget.username)),
                 );
               },
             ),
@@ -71,14 +72,17 @@ class _progress_trackerState extends State<progress_tracker> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: widget.username)),
                 );
               },
             ),
             ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
+              title: const Text('Logout'),
+              onTap: () async {
+                // Sign out using Firebase
+                await FirebaseAuth.instance.signOut();
+                // Navigate to LoginScreen after signing out
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
@@ -177,7 +181,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: globalUsername),
+                  builder: (context) => HobbyManagement(username: widget.username),
                 ),
               );
               break;
@@ -185,7 +189,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) => home_screen(username: widget.username), // Use the global variable
                 ),
               );
               break;
@@ -193,7 +197,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  calendar_screen(username: globalUsername),
+                  builder: (context) =>  calendar_screen(username: widget.username),
                 ),
               );
               break;
@@ -201,7 +205,7 @@ class _progress_trackerState extends State<progress_tracker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  NotificationCenter(username: globalUsername),
+                  builder: (context) =>  NotificationCenter(username: widget.username),
                 ),
               );
               break;

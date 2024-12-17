@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'globals.dart';
 import 'progress_tracker.dart';
 import 'hobby_management.dart';
 import 'calendar_screen.dart';
@@ -8,23 +8,28 @@ import 'edit_profile.dart'; // Import the edit_profile screen
 import 'login_screen.dart'; // Import the login_screen
 import 'home_screen.dart';
 
-class developers extends StatelessWidget {
+class Developers extends StatefulWidget {
   final String username;
-  const developers({super.key, required this.username});
+  const Developers({super.key, required this.username});
 
+  @override
+  _DevelopersState createState() => _DevelopersState();
+}
+
+class _DevelopersState extends State<Developers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF00AFDF),
-        title: Text('Developers'),
+        backgroundColor: const Color(0xFF00AFDF),
+        title: const Text('Developers'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(username),
+              accountName: Text(widget.username), // Use widget.username here
               accountEmail: null,
               currentAccountPicture: const CircleAvatar(
                 backgroundColor: Colors.white,
@@ -39,27 +44,30 @@ class developers extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Home'),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => home_screen(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) => home_screen(username: widget.username)), // Use widget.username
                 );
               },
             ),
             ListTile(
-              title: Text('Edit Profile'),
+              title: const Text('Edit Profile'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => edit_profile(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) => edit_profile(username: widget.username)), // Use widget.username
                 );
               },
             ),
             ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
+              title: const Text('Logout'),
+              onTap: () async {
+                // Sign out using Firebase
+                await FirebaseAuth.instance.signOut();
+                // Navigate to LoginScreen after signing out
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
@@ -83,7 +91,7 @@ class developers extends StatelessWidget {
         ),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -105,17 +113,17 @@ class developers extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             DeveloperTile(name: 'Mark Josh Alvear', imagePath: 'images/Alvear.png'),
-            SizedBox(height: 30), // Add space between developers
+            const SizedBox(height: 30), // Add space between developers
             DeveloperTile(name: 'Nigel Jan L. Naniong', imagePath: 'images/Naniong.png'),
-            SizedBox(height: 30), // Add space between developers
+            const SizedBox(height: 30), // Add space between developers
             DeveloperTile(name: 'Andrei Christian Tonido', imagePath: 'images/Tonido.png'),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.grey),
             label: '',
@@ -137,7 +145,7 @@ class developers extends StatelessWidget {
             label: '',
           ),
         ],
-        backgroundColor: Color(0xFF00AFDF),
+        backgroundColor: const Color(0xFF00AFDF),
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
@@ -146,7 +154,7 @@ class developers extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername),
+                  builder: (context) => home_screen(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -154,7 +162,7 @@ class developers extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: globalUsername),
+                  builder: (context) => HobbyManagement(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -162,7 +170,7 @@ class developers extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => calendar_screen(username: globalUsername),
+                  builder: (context) => calendar_screen(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -170,7 +178,7 @@ class developers extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NotificationCenter(username: globalUsername),
+                  builder: (context) => NotificationCenter(username: widget.username), // Use widget.username
                 ),
               );
               break;

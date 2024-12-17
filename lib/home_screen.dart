@@ -50,8 +50,8 @@ class _home_screenState extends State<home_screen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => developers(
-                        username: globalUsername,
+                      builder: (context) => Developers(
+                        username: widget.username,
                       )),
                 );
               },
@@ -63,7 +63,7 @@ class _home_screenState extends State<home_screen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => edit_profile(
-                        username: globalUsername,
+                        username: widget.username,
                       )),
                 );
               },
@@ -158,7 +158,7 @@ class _home_screenState extends State<home_screen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => progress_tracker(
-                    username: globalUsername,
+                    username: widget.username,
                   ),
                 ),
               );
@@ -168,7 +168,7 @@ class _home_screenState extends State<home_screen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => HobbyManagement(
-                    username: globalUsername,
+                    username: widget.username,
                   ),
                 ),
               );
@@ -178,7 +178,7 @@ class _home_screenState extends State<home_screen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => calendar_screen(
-                    username: globalUsername,
+                    username: widget.username,
                   ),
                 ),
               );
@@ -188,7 +188,7 @@ class _home_screenState extends State<home_screen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => NotificationCenter(
-                      username: globalUsername,
+                      username: widget.username,
                     )),
               );
               break;

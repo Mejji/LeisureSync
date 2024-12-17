@@ -64,7 +64,7 @@ class _edit_profileState extends State<edit_profile> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => home_screen(username: globalUsername),
+                    builder: (context) => home_screen(username: widget.username),
                   ),
                 );
               },
@@ -156,7 +156,7 @@ class _edit_profileState extends State<edit_profile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => home_screen(username: globalUsername),
+                                  builder: (context) => home_screen(username: widget.username),
                                 ),
                               );
                             },
@@ -175,7 +175,7 @@ class _edit_profileState extends State<edit_profile> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => home_screen(username: globalUsername),
+                                    builder: (context) => home_screen(username: widget.username),
                                   ),
                                 );
                               }
@@ -208,7 +208,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => progress_tracker(username: globalUsername),
+                  builder: (context) => progress_tracker(username: widget.username),
                 ),
               );
               break;
@@ -216,7 +216,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: globalUsername),
+                  builder: (context) => HobbyManagement(username: widget.username),
                 ),
               );
               break;
@@ -224,7 +224,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => calendar_screen(username: globalUsername),
+                  builder: (context) => calendar_screen(username: widget.username),
                 ),
               );
               break;
@@ -232,7 +232,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  NotificationCenter(username: globalUsername),
+                  builder: (context) =>  NotificationCenter(username: widget.username),
                 ),
               );
               break;
