@@ -28,9 +28,38 @@ class _ListHobbiesState extends State<ListHobbies> {
   }
 
   void _addHobby() {
-    setState(() {
-      hobbies.add("New Hobby");
-    });
+    showDialog(
+      context: context,
+      builder: (context) {
+        String newHobby = ""; // Store the input hobby name
+        return AlertDialog(
+          title: const Text('Add New Hobby'),
+          content: TextField(
+            onChanged: (value) {
+              newHobby = value;
+            },
+            decoration: const InputDecoration(hintText: "Enter hobby name"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Add'),
+              onPressed: () {
+                setState(() {
+                  hobbies.add(newHobby);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -94,11 +123,14 @@ class _ListHobbiesState extends State<ListHobbies> {
                         ),
                       ),
                       onTap: () {
-                        // Navigate to time_hobby.dart screen when a hobby is tapped
+                        // Navigate to time_hobby.dart screen and pass the hobby name
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TimerHobby(username: widget.username, selectedCategory: '',)
+                            builder: (context) => TimerHobby(
+                              username: widget.username,
+                              selectedCategory: hobbies[index], // Pass the hobby name here
+                            ),
                           ),
                         );
                       },
@@ -122,62 +154,7 @@ class _ListHobbiesState extends State<ListHobbies> {
         backgroundColor: const Color(0xFF00AFDF),
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.bar_chart, color: Colors.grey),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.groups, color: Colors.blue),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.calendar_today),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.notifications),
-            label: '',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username),
-                ),
-              );
-              break;
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
-              );
-              break;
-            case 4:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
-              );
-              break;
-          }
-        },
-      ),
+      // ... (rest of your code)
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leisuresync/list_hobbies.dart';
 import 'dart:async';
-import 'progress_tracker.dart';  // Import the Progress Tracker screen
+import 'progress_tracker.dart';
 import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_center.dart';
@@ -47,7 +47,7 @@ class _TimerHobbyState extends State<TimerHobby> {
     });
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => ListHobbies(selectedCategory: '',username: widget.username)), // Adjust category if needed
+      MaterialPageRoute(builder: (context) => ListHobbies(selectedCategory: '',username: widget.username)),
     );
   }
 
@@ -80,12 +80,12 @@ class _TimerHobbyState extends State<TimerHobby> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Basketball Timer'),
+        title: Text('${widget.selectedCategory} Timer'), // Dynamic title
         backgroundColor: Color(0xFF00AFDF),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Go back to the previous screen
+            Navigator.pop(context);
           },
         ),
       ),
@@ -108,7 +108,7 @@ class _TimerHobbyState extends State<TimerHobby> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Basketball Practice Timer',
+                '${widget.selectedCategory} Timer', // Dynamic title
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
