@@ -1,1 +1,3 @@
-String globalUsername = "";
+class Globals {
+  static String username = "";
+}

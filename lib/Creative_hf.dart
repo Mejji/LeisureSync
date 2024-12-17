@@ -5,10 +5,7 @@ import 'calendar_screen.dart';
 import 'notification_center.dart';
 import 'hobby_management.dart';
 import 'list_hobbies.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
 import 'globals.dart';
-import 'developers.dart';
 
 class Creative_hf extends StatefulWidget {
   final String username; // Add username parameter
@@ -38,54 +35,6 @@ class  _Creative_hfState  extends State<Creative_hf> {
       appBar: AppBar(
         title: const Text('Creative Hobby'),
         backgroundColor: const Color(0xFF00AFDF),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
-              accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
-              ),
-              decoration: const BoxDecoration(
-                color: Color(0xFF00AFDF),
-              ),
-            ),
-            ListTile(
-              title: Text('Developers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => edit_profile(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );},
-            ),
-          ],
-        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -226,7 +175,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HobbyManagement(username: globalUsername)),
+                        MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
                       );
                     },
                     child: const Text('Back'),
@@ -237,7 +186,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
                         ? () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  list_hobbies(username: globalUsername)),
+                        MaterialPageRoute(builder: (context) =>  ListHobbies(selectedCategory: '', username: widget.username)),
                       );
                     }
                         : null,
@@ -291,27 +240,27 @@ class  _Creative_hfState  extends State<Creative_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) => home_screen(username: widget.username), // Use the global variable
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: widget.username)),
               );
               break;
           }

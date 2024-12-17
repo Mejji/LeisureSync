@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:leisuresync/list_hobbies.dart';
 import 'dart:async';
 import 'progress_tracker.dart';  // Import the Progress Tracker screen
 import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_center.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
 import 'globals.dart';
-import 'developers.dart';
 
 class TimerHobby extends StatefulWidget {
-  final String username; // Add username parameter
-  const TimerHobby({super.key, required this.username});
+  final String selectedCategory;
+  final String username;
+  const TimerHobby({super.key, required this.selectedCategory, required this.username});
 
   @override
   _TimerHobbyState createState() => _TimerHobbyState();
@@ -48,7 +47,7 @@ class _TimerHobbyState extends State<TimerHobby> {
     });
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+      MaterialPageRoute(builder: (context) => ListHobbies(selectedCategory: '',username: widget.username)), // Adjust category if needed
     );
   }
 
@@ -83,56 +82,14 @@ class _TimerHobbyState extends State<TimerHobby> {
       appBar: AppBar(
         title: Text('Basketball Timer'),
         backgroundColor: Color(0xFF00AFDF),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
-              accountEmail: null,
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xFF00AFDF),
-              ),
-            ),
-            ListTile(
-              title: Text('Developers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous screen
+          },
         ),
       ),
+
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -196,7 +153,7 @@ class _TimerHobbyState extends State<TimerHobby> {
                   ElevatedButton(
                     onPressed: stopTimer,
                     child: Text('STOP'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   ),
                 ],
               ),
@@ -205,26 +162,26 @@ class _TimerHobbyState extends State<TimerHobby> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart, color: Colors.grey),
-            label: 'Stats',
+            icon: Icon(Icons.bar_chart, color: Colors.grey),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.grey),
-            label: 'Home',
+            icon: Icon(Icons.home),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.blue),
-            label: 'Profile',
+            icon: Icon(Icons.groups, color: Colors.blue),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: Colors.grey),
-            label: 'Calendar',
+            icon: Icon(Icons.calendar_today),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, color: Colors.grey),
-            label: 'Notifications',
+            icon: Icon(Icons.notifications),
+            label: '',
           ),
         ],
         selectedItemColor: Colors.blue,
@@ -234,27 +191,29 @@ class _TimerHobbyState extends State<TimerHobby> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) =>
+                      home_screen(username: widget.username),
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
+                MaterialPageRoute(
+                    builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }

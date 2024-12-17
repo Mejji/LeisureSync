@@ -5,14 +5,11 @@ import 'calendar_screen.dart';
 import 'notification_center.dart';
 import 'hobby_management.dart';
 import 'list_hobbies.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
 import 'globals.dart';
-import 'developers.dart';
 
 class Physical_hf extends StatefulWidget {
-  final String username; // Add username parameter
-  const Physical_hf({super.key, required this.username});
+  final String username;
+  const Physical_hf({super.key, required this.username}); // Add username parameter
 
   @override
   _Physical_hfState createState() => _Physical_hfState();
@@ -38,54 +35,11 @@ class _Physical_hfState extends State<Physical_hf> {
       appBar: AppBar(
         title: const Text('Physical Hobby Form'),
         backgroundColor: const Color(0xFF00AFDF),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
-              accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
-              ),
-              decoration: const BoxDecoration(
-                color: Color(0xFF00AFDF),
-              ),
-            ),
-            ListTile(
-              title: Text('Developers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => edit_profile(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous screen
+          },
         ),
       ),
       body: Container(
@@ -227,7 +181,7 @@ class _Physical_hfState extends State<Physical_hf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  HobbyManagement(username: globalUsername)),
+                        MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
                       );
                     },
                     child: const Text('Back'),
@@ -238,7 +192,9 @@ class _Physical_hfState extends State<Physical_hf> {
                         ? () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  list_hobbies(username: globalUsername)),
+                        MaterialPageRoute(
+                          builder: (context) => ListHobbies(selectedCategory: '', username: widget.username),
+                        ),
                       );
                     }
                         : null,
@@ -255,7 +211,7 @@ class _Physical_hfState extends State<Physical_hf> {
               if (!isFormValid)
                 const Text(
                   'Please fill out all fields to enable the save button.',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  style: TextStyle(color: Colors.red, fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
             ],
@@ -273,7 +229,7 @@ class _Physical_hfState extends State<Physical_hf> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.music_note, color: Colors.blue),
+            icon: Icon(Icons.groups, color: Colors.blue),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -292,27 +248,27 @@ class _Physical_hfState extends State<Physical_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) => home_screen(username: widget.username),
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }

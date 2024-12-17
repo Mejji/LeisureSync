@@ -25,35 +25,14 @@ class _HobbyManagementState extends State<HobbyManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF00AFDF),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => home_screen(username: globalUsername), // Use the global variable
-              ),
-            );
-          },
-        ),
-        title: Text('Hobby Management'),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer(); // Open the drawer
-              },
-            ),
-          ),
-        ],
+        backgroundColor: const Color(0xFF00AFDF),
+        title: const Text('Hobby Management'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            UserAccountsDrawerHeader(
+             UserAccountsDrawerHeader(
               accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
@@ -69,29 +48,26 @@ class _HobbyManagementState extends State<HobbyManagement> {
               ),
             ),
             ListTile(
-              title: Text('Developers'),
+              title: const Text('Developers'),
               onTap: () {
-                // Navigate to Edit Profile screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) => Developers(username: widget.username)),
                 );
               },
             ),
             ListTile(
-              title: Text('Edit Profile'),
+              title: const Text('Edit Profile'),
               onTap: () {
-                // Navigate to Edit Profile screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
+                  MaterialPageRoute(builder: (context) => edit_profile(username: widget.username)),
                 );
               },
             ),
             ListTile(
-              title: Text('Logout'),
+              title: const Text('Logout'),
               onTap: () {
-                // Navigate to Login screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -107,10 +83,10 @@ class _HobbyManagementState extends State<HobbyManagement> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF00AFDF), // Top color
-              Colors.white, // Dominant semi-middle color
-              Colors.white, // Dominant middle color
-              Colors.white, // Dominant bottom color
+              Color(0xFF00AFDF),
+              Colors.white,
+              Colors.white,
+              Colors.white,
             ],
           ),
         ),
@@ -119,8 +95,8 @@ class _HobbyManagementState extends State<HobbyManagement> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width * 0.8, // Extend the width
-                padding: EdgeInsets.symmetric(vertical: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -129,24 +105,26 @@ class _HobbyManagementState extends State<HobbyManagement> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
-                child: Text(
+                child: const Text(
                   'Hobby Categories',
-                  textAlign: TextAlign.center, // Center align the text
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               HobbyButton(
                 icon: Icons.self_improvement,
                 label: 'Relaxing',
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Relaxing_hf(username: globalUsername)),
+                    MaterialPageRoute(
+                      builder: (context) => Relaxing_hf(username: widget.username),
+                    ),
                   );
                 },
               ),
@@ -156,7 +134,9 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Physical_hf(username: globalUsername)),
+                    MaterialPageRoute(
+                      builder: (context) => Physical_hf(username: widget.username),
+                    ),
                   );
                 },
               ),
@@ -166,7 +146,9 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Creative_hf(username: globalUsername)),
+                    MaterialPageRoute(
+                      builder: (context) => Creative_hf(username: widget.username),
+                    ),
                   );
                 },
               ),
@@ -175,7 +157,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart, color: Colors.grey),
             label: '',
@@ -185,7 +167,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.music_note, color: Colors.blue),
+            icon: Icon(Icons.groups, color: Colors.blue),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -204,27 +186,29 @@ class _HobbyManagementState extends State<HobbyManagement> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) =>
+                      home_screen(username: widget.username),
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
+                MaterialPageRoute(
+                    builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }
@@ -240,6 +224,7 @@ class HobbyButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const HobbyButton({
+    super.key,
     required this.icon,
     required this.label,
     required this.onPressed,
@@ -254,8 +239,8 @@ class HobbyButton extends StatelessWidget {
         icon: Icon(icon, size: 30),
         label: Text(label),
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
-          textStyle: TextStyle(fontSize: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+          textStyle: const TextStyle(fontSize: 20),
         ),
       ),
     );

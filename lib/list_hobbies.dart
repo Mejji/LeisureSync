@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'Creative_hf.dart';
+import 'Physical_hf.dart';
+import 'Relaxing_hf.dart';
 import 'home_screen.dart';
 import 'progress_tracker.dart';
 import 'calendar_screen.dart';
 import 'notification_center.dart';
 import 'time_hobby.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
 import 'globals.dart';
-import 'developers.dart';
 
-class list_hobbies extends StatefulWidget {
+class ListHobbies extends StatefulWidget {
+  final String selectedCategory;
   final String username;
-  const list_hobbies({super.key, required this.username});
+  const ListHobbies({super.key, required this.selectedCategory, required this.username});
 
   @override
-  State<list_hobbies> createState() => _list_hobbiesState();
+  State<ListHobbies> createState() => _ListHobbiesState();
 }
 
-class _list_hobbiesState extends State<list_hobbies> {
+class _ListHobbiesState extends State<ListHobbies> {
   final List<String> hobbies = ["Playing Guitar", "Basketball", "Singing", "Yoga"];
 
   void _deleteHobby(int index) {
@@ -36,146 +37,111 @@ class _list_hobbiesState extends State<list_hobbies> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF00AFDF),
-        title: Text('List of Hobbies'),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();  // Opens the Drawer when menu icon is clicked
-            },
-          ),
+        backgroundColor: const Color(0xFF00AFDF),
+        title: const Text('List of Hobbies'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            switch (widget.selectedCategory) {
+              case 'Relaxing_hf':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Relaxing_hf(username: widget.username)),
+                );
+                break;
+              case 'Physical_hf':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Physical_hf(username: widget.username)),
+                );
+                break;
+              case 'Creative_hf':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Creative_hf(username: widget.username)),
+                );
+                break;
+              default:
+                Navigator.pop(context);
+            }
+          },
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
-              accountEmail: null,
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: hobbies.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 16.0,
+                      ),
+                      title: Text(
+                        hobbies[index],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        // Navigate to time_hobby.dart screen when a hobby is tapped
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TimerHobby(username: widget.username, selectedCategory: '',)
+                          ),
+                        );
+                      },
+                      trailing: IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.redAccent,
+                        ),
+                        onPressed: () => _deleteHobby(index),
+                      ),
+                    ),
+                  );
+                },
               ),
-              decoration: BoxDecoration(
-                color: Color(0xFF00AFDF),
-              ),
-            ),
-            ListTile(
-              title: Text('Developers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
             ),
           ],
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF00AFDF), // Top color
-              Colors.white, // Dominant semi-middle color
-              Colors.white, // Dominant middle color
-              Colors.white, // Dominant bottom color
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: hobbies.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(hobbies[index]),
-                        trailing: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => TimerHobby(username: globalUsername)),
-                            );
-                          },
-                          child: Text('Begin Tracking'),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (hobbies.isNotEmpty) {
-                        _deleteHobby(0);  // Deletes the first hobby for now, you can add more logic
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    child: Text('Delete'),
-                  ),
-                  ElevatedButton(
-                    onPressed: _addHobby, // Adds a new hobby to the list
-                    child: Text('Add'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addHobby,
+        backgroundColor: const Color(0xFF00AFDF),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart, color: Colors.grey),
+            icon: const Icon(Icons.bar_chart, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.grey),
+            icon: const Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.music_note, color: Colors.blue),
+            icon: const Icon(Icons.groups, color: Colors.blue),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: Colors.grey),
+            icon: const Icon(Icons.calendar_today),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, color: Colors.grey),
+            icon: const Icon(Icons.notifications),
             label: '',
           ),
         ],
@@ -186,27 +152,27 @@ class _list_hobbiesState extends State<list_hobbies> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: globalUsername), // Use the global variable
+                  builder: (context) => home_screen(username: widget.username),
                 ),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
+                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }

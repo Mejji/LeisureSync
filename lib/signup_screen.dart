@@ -197,14 +197,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
 
                               // Navigate to HomeScreen after successful sign up
-                              globalUsername = _usernameController.text;
+                              Globals.username = _usernameController.text;
                               setState(() {
                                 // Wrap navigation in setState
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        home_screen(username: globalUsername),
+                                        home_screen(username: Globals.username),
                                   ),
                                 );
                               });
