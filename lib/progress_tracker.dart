@@ -47,12 +47,7 @@ class _progress_trackerState extends State<progress_tracker> {
               accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+                backgroundImage: AssetImage('images/chillguy.png'),
               ),
               decoration: BoxDecoration(
                 color: Color(0xFF00AFDF),

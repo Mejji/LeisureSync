@@ -32,13 +32,8 @@ class _home_screenState extends State<home_screen> {
             UserAccountsDrawerHeader(
               accountName: Text(widget.username),
               accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('images/chillguy.png'),
               ),
               decoration: const BoxDecoration(
                 color: Color(0xFF00AFDF),
@@ -104,14 +99,9 @@ class _home_screenState extends State<home_screen> {
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 100, // Made the CircleAvatar larger
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.person,
-                size: 70,
-                color: Colors.blue,
-              ),
+              backgroundImage: AssetImage('images/chillguy.png'), // Use backgroundImage to display an image
             ),
             const SizedBox(height: 20),
             const Padding(

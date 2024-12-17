@@ -34,13 +34,8 @@ class _CalendarScreenState extends State<calendar_screen> {
             UserAccountsDrawerHeader(
               accountName: Text(widget.username),
               accountEmail: null,
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('images/chillguy.png'),
               ),
               decoration: const BoxDecoration(
                 color: Color(0xFF00AFDF),
