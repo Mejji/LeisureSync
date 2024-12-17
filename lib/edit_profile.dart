@@ -9,7 +9,8 @@ import 'globals.dart';
 
 
 class edit_profile extends StatefulWidget {
-  const edit_profile({super.key});
+  final String username;
+  const edit_profile({super.key, required this.username});
 
   @override
   State<edit_profile> createState() => _edit_profileState();
@@ -45,7 +46,7 @@ class _edit_profileState extends State<edit_profile> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -209,7 +210,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => progress_tracker(),
+                  builder: (context) => progress_tracker(username: globalUsername),
                 ),
               );
               break;
@@ -217,7 +218,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HobbyManagement(),
+                  builder: (context) => HobbyManagement(username: globalUsername),
                 ),
               );
               break;
@@ -225,7 +226,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const calendar_screen(),
+                  builder: (context) => calendar_screen(username: globalUsername),
                 ),
               );
               break;
@@ -233,7 +234,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationCenter(),
+                  builder: (context) =>  NotificationCenter(username: globalUsername),
                 ),
               );
               break;
