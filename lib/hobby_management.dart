@@ -9,10 +9,12 @@ import 'notification_center.dart'; // Import the notification_center screen
 import 'edit_profile.dart'; // Import the edit_profile screen
 import 'login_screen.dart'; // Import the login_screen
 import 'globals.dart';
+import 'developers.dart';
 
 
 class HobbyManagement extends StatefulWidget {
-  const HobbyManagement({super.key});
+  final String username;
+  const HobbyManagement({super.key, required this.username});
 
   @override
   State<HobbyManagement> createState() => _HobbyManagementState();
@@ -52,7 +54,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -67,12 +69,12 @@ class _HobbyManagementState extends State<HobbyManagement> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 // Navigate to Edit Profile screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  developers(username: globalUsername)),
                 );
               },
             ),
@@ -82,7 +84,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 // Navigate to Edit Profile screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) =>  edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -144,7 +146,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Relaxing_hf()),
+                    MaterialPageRoute(builder: (context) => Relaxing_hf(username: globalUsername)),
                   );
                 },
               ),
@@ -154,7 +156,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Physical_hf()),
+                    MaterialPageRoute(builder: (context) => Physical_hf(username: globalUsername)),
                   );
                 },
               ),
@@ -164,7 +166,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Creative_hf()),
+                    MaterialPageRoute(builder: (context) => Creative_hf(username: globalUsername)),
                   );
                 },
               ),
@@ -202,7 +204,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
@@ -216,13 +218,13 @@ class _HobbyManagementState extends State<HobbyManagement> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationCenter()),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }
