@@ -8,9 +8,12 @@ import 'list_hobbies.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
 import 'globals.dart';
-
+import 'developers.dart';
 
 class Creative_hf extends StatefulWidget {
+  final String username; // Add username parameter
+  const Creative_hf({super.key, required this.username}); // Update constructor
+
   @override
   _Creative_hfState createState() => _Creative_hfState();
 }
@@ -41,7 +44,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: const Text('User'),
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: const CircleAvatar(
                 backgroundColor: Colors.white,
@@ -56,11 +59,11 @@ class  _Creative_hfState  extends State<Creative_hf> {
               ),
             ),
             ListTile(
-              title: Text('Account'),
+              title: Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) => developers(username: globalUsername)),
                 );
               },
             ),
@@ -69,7 +72,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const edit_profile()),
+                  MaterialPageRoute(builder: (context) => edit_profile(username: globalUsername)),
                 );
               },
             ),
@@ -223,7 +226,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HobbyManagement()),
+                        MaterialPageRoute(builder: (context) => HobbyManagement(username: globalUsername)),
                       );
                     },
                     child: const Text('Back'),
@@ -234,7 +237,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
                         ? () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const list_hobbies()),
+                        MaterialPageRoute(builder: (context) =>  list_hobbies(username: globalUsername)),
                       );
                     }
                         : null,
@@ -288,7 +291,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker()),
+                MaterialPageRoute(builder: (context) => progress_tracker(username: globalUsername)),
               );
               break;
             case 1:
@@ -302,13 +305,13 @@ class  _Creative_hfState  extends State<Creative_hf> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const calendar_screen()),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: globalUsername)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationCenter()),
+                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: globalUsername)),
               );
               break;
           }
