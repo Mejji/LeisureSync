@@ -1,36 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:leisuresync/developers.dart';
-import 'globals.dart';
-import 'hobby_management.dart';
 import 'progress_tracker.dart';
+import 'hobby_management.dart';
 import 'calendar_screen.dart';
 import 'notification_center.dart';
-import 'login_screen.dart';
-import 'edit_profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'edit_profile.dart'; // Import the edit_profile screen
+import 'login_screen.dart'; // Import the login_screen
+import 'home_screen.dart';
 
-class home_screen extends StatefulWidget {
+class Developers extends StatefulWidget {
   final String username;
-  const home_screen({super.key, required this.username});
+  const Developers({super.key, required this.username});
 
   @override
-  State<home_screen> createState() => _home_screenState();
+  _DevelopersState createState() => _DevelopersState();
 }
 
-class _home_screenState extends State<home_screen> {
+class _DevelopersState extends State<Developers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF00AFDF),
-        title: const Text('Home'),
+        title: const Text('Developers'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: <Widget>[
+          children: [
             UserAccountsDrawerHeader(
-              accountName: Text(widget.username),
+              accountName: Text(widget.username), // Use widget.username here
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('images/chillguy.png'),
@@ -40,14 +39,11 @@ class _home_screenState extends State<home_screen> {
               ),
             ),
             ListTile(
-              title: const Text('Developers'),
+              title: const Text('Home'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => Developers(
-                        username: widget.username,
-                      )),
+                  MaterialPageRoute(builder: (context) => home_screen(username: widget.username)), // Use widget.username
                 );
               },
             ),
@@ -56,10 +52,7 @@ class _home_screenState extends State<home_screen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => edit_profile(
-                        username: widget.username,
-                      )),
+                  MaterialPageRoute(builder: (context) => edit_profile(username: widget.username)), // Use widget.username
                 );
               },
             ),
@@ -84,41 +77,50 @@ class _home_screenState extends State<home_screen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF00AFDF), // Top color
-              Colors.white, // Dominant semi-middle color
-              Colors.white, // Dominant middle color
-              Colors.white, // Dominant bottom color
+              Color(0xFF00AFDF),
+              Colors.white,
+              Colors.white,
+              Colors.white,
             ],
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Welcome, ${widget.username}', // Display username here
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 20),
-            CircleAvatar(
-              radius: 100, // Made the CircleAvatar larger
-              backgroundImage: AssetImage('images/chillguy.png'), // Use backgroundImage to display an image
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                "It's a brand new day full of possibilities, let's own it! Gear up, set the vibe, and make it amazing! 🎉🚀✨",
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: const Text(
+                'LeisureSync Developers',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
+            const SizedBox(height: 30),
+            DeveloperTile(name: 'Mark Josh Alvear', imagePath: 'images/Mj.png'),
+            const SizedBox(height: 30), // Add space between developers
+            DeveloperTile(name: 'Nigel Jan L. Naniong', imagePath: 'images/Nigel.png'),
+            const SizedBox(height: 30), // Add space between developers
+            DeveloperTile(name: 'Andrei Christian Tonido', imagePath: 'images/drei.png'),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart, color: Colors.grey),
+            icon: Icon(Icons.home, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -126,8 +128,8 @@ class _home_screenState extends State<home_screen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.blue),
-            label: 'Home',
+            icon: Icon(Icons.computer, color: Colors.blue),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
@@ -147,9 +149,7 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProgressTracker(
-                    username: widget.username,
-                  ),
+                  builder: (context) => home_screen(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -157,9 +157,7 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(
-                    username: widget.username,
-                  ),
+                  builder: (context) => HobbyManagement(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -167,9 +165,7 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => calendar_screen(
-                    username: widget.username,
-                  ),
+                  builder: (context) => calendar_screen(username: widget.username), // Use widget.username
                 ),
               );
               break;
@@ -177,14 +173,32 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => NotificationCenter(
-                      username: widget.username,
-                    )),
+                  builder: (context) => NotificationCenter(username: widget.username), // Use widget.username
+                ),
               );
               break;
           }
         },
       ),
+    );
+  }
+}
+
+class DeveloperTile extends StatelessWidget {
+  final String name;
+  final String imagePath;
+
+  DeveloperTile({required this.name, required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 30,
+        backgroundColor: Colors.grey[200],
+        backgroundImage: AssetImage(imagePath),
+      ),
+      title: Text(name),
     );
   }
 }
