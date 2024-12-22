@@ -127,7 +127,7 @@ class _home_screenState extends State<home_screen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.blue),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
@@ -147,7 +147,7 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => progress_tracker(
+                  builder: (context) => ProgressTracker(
                     username: widget.username,
                   ),
                 ),

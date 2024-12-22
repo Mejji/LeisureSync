@@ -99,21 +99,37 @@ class _CalendarScreenState extends State<calendar_screen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.bar_chart, color: Colors.grey), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.groups, color: Colors.grey), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today, color: Colors.blue), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.grey), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications, color: Colors.grey), label: ''),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.groups, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today, color: Colors.blue),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications, color: Colors.grey),
+            label: '',
+          ),
         ],
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         backgroundColor: Colors.blue,
         onTap: (index) {
+          // Logic to switch screens based on the selected tab
           switch (index) {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
+                MaterialPageRoute(builder: (context) => ProgressTracker(username: widget.username)),
               );
               break;
             case 1:
@@ -122,12 +138,17 @@ class _CalendarScreenState extends State<calendar_screen> {
                 MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
               );
               break;
+            case 2: // Home screen case
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
+                    (Route<dynamic> route) => false, // Remove all previous screens
+              );
+              break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username),
-                ),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:

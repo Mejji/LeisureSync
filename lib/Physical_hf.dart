@@ -225,22 +225,23 @@ class _Physical_hfState extends State<Physical_hf> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.groups, color: Colors.blue),
+            label: 'hobbies',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_today, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Icons.notifications, color: Colors.grey),
             label: '',
           ),
         ],
+        backgroundColor: const Color(0xFF00AFDF),
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
@@ -248,15 +249,20 @@ class _Physical_hfState extends State<Physical_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
+                MaterialPageRoute(builder: (context) => ProgressTracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username),
-                ),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
+              );
+              break;
+            case 2: // Home screen case
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
+                    (Route<dynamic> route) => false, // Remove all previous screens
               );
               break;
             case 3:

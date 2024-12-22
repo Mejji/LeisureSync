@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leisuresync/hobby_management.dart';
 import 'Creative_hf.dart';
 import 'Physical_hf.dart';
 import 'Relaxing_hf.dart';
@@ -155,6 +156,68 @@ class _ListHobbiesState extends State<ListHobbies> {
         child: const Icon(Icons.add, color: Colors.white),
       ),
       // ... (rest of your code)
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.groups, color: Colors.blue),
+            label: 'hobbies',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today, color: Colors.grey),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications, color: Colors.grey),
+            label: '',
+          ),
+        ],
+        backgroundColor: const Color(0xFF00AFDF),
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProgressTracker(username: widget.username)),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
+              );
+              break;
+            case 2: // Home screen case
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
+                    (Route<dynamic> route) => false, // Remove all previous screens
+              );
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
+              );
+              break;
+            case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
+              );
+              break;
+          }
+        },
+      ),
     );
   }
 }

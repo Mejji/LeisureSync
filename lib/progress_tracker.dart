@@ -1,43 +1,51 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'hobby_management.dart'; // Import the home_management screen
+import 'hobby_management.dart';
 import 'home_screen.dart';
-import 'calendar_screen.dart'; // Import the calendar_screen
-import 'notification_center.dart'; // Import the notification_center screen
+import 'calendar_screen.dart';
+import 'notification_center.dart';
 import 'login_screen.dart';
 import 'edit_profile.dart';
-import 'globals.dart';
 import 'developers.dart';
 
-class progress_tracker extends StatefulWidget {
+class ProgressTracker extends StatefulWidget {
   final String username;
-  const progress_tracker({super.key, required this.username});
+
+  const ProgressTracker({Key? key, required this.username}) : super(key: key);
+
   @override
-  _progress_trackerState createState() => _progress_trackerState();
+  _ProgressTrackerState createState() => _ProgressTrackerState();
 }
 
-class _progress_trackerState extends State<progress_tracker> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Robot Page'),
-    Text('Home Page'),
-    Text('Calendar Page'),
-    Text('Notifications Page'),
-  ];
+class _ProgressTrackerState extends State<ProgressTracker> {
+  static const List<String> hobbies = ['Basketball', 'Guitar', 'Singing', 'Yoga'];
+  static const List<double> hoursSpent = [30, 15, 20, 10];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onBarTapped(int index) {
+    final hobby = hobbies[index];
+    final hours = hoursSpent[index];
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(hobby),
+        content: Text('You have spent a total of $hours hours on $hobby.'),
+        actions: [
+          TextButton(
+            child: const Text('Close'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Progress Tracker'),
-        backgroundColor: Color(0xFF00AFDF),
-
+        title: const Text('Progress Tracker'),
+        backgroundColor: const Color(0xFF00AFDF),
       ),
       drawer: Drawer(
         child: ListView(
@@ -46,37 +54,40 @@ class _progress_trackerState extends State<progress_tracker> {
             UserAccountsDrawerHeader(
               accountName: Text(widget.username),
               accountEmail: null,
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 backgroundImage: AssetImage('images/chillguy.png'),
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFF00AFDF),
               ),
             ),
             ListTile(
-              title: Text('Developers'),
+              title: const Text('Developers'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  Developers(username: widget.username)),
+                  MaterialPageRoute(
+                    builder: (context) => Developers(username: widget.username),
+                  ),
                 );
               },
             ),
             ListTile(
-              title: Text('Edit Profile'),
+              title: const Text('Edit Profile'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  edit_profile(username: widget.username)),
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        edit_profile(username: widget.username),
+                  ),
                 );
               },
             ),
             ListTile(
               title: const Text('Logout'),
               onTap: () async {
-                // Sign out using Firebase
                 await FirebaseAuth.instance.signOut();
-                // Navigate to LoginScreen after signing out
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -87,76 +98,65 @@ class _progress_trackerState extends State<progress_tracker> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF00AFDF), // Top color
-              Colors.white, // Dominant semi-middle color
-              Colors.white, // Dominant middle color
-              Colors.white, // Dominant bottom color
+              Color(0xFF00AFDF),
+              Colors.white,
+              Colors.white,
+              Colors.white,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Hobby Categories Header
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8, // Extend the width
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: const Text(
-                  'Progress Tracker',
-                  textAlign: TextAlign.center, // Center align the text
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
-              SizedBox(height: 170), // Moved up
-
-              Container(
-                height: 200,
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: _widgetOptions.elementAt(_selectedIndex),
+              child: const Text(
+                'Progress Tracker',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Hobby: Basketball',
-                style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: BarChart(
+                hobbies: hobbies,
+                hoursSpent: hoursSpent,
+                onBarTapped: _onBarTapped,
               ),
-              Text(
-                'Time Spent: 30 Minutes',
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.room, color: Colors.grey),
+            icon: Icon(Icons.bar_chart, color: Colors.blue),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.groups, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.grey),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart, color: Colors.blue),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -168,40 +168,40 @@ class _progress_trackerState extends State<progress_tracker> {
             label: '',
           ),
         ],
-        currentIndex: _selectedIndex,
+        backgroundColor: const Color(0xFF00AFDF),
         selectedItemColor: Colors.blue,
-        onTap: (_onItemTapped){
-          switch (_onItemTapped) {
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: widget.username),
-                ),
+                MaterialPageRoute(builder: (context) => ProgressTracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username), // Use the global variable
-                ),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
+              );
+              break;
+            case 2:
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
+                    (Route<dynamic> route) => false,
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>  calendar_screen(username: widget.username),
-                ),
+                MaterialPageRoute(builder: (context) => calendar_screen(username: widget.username)),
               );
               break;
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>  NotificationCenter(username: widget.username),
-                ),
+                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }
@@ -212,33 +212,81 @@ class _progress_trackerState extends State<progress_tracker> {
 }
 
 class BarChart extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Bar(color: Colors.red, height: 150),
-        Bar(color: Colors.blue, height: 50),
-        Bar(color: Colors.green, height: 100),
-        Bar(color: Colors.yellow, height: 150),
-        Bar(color: Colors.purple, height: 20),
-      ],
-    );
-  }
-}
+  final List<String> hobbies;
+  final List<double> hoursSpent;
+  final Function(int) onBarTapped;
 
-class Bar extends StatelessWidget {
-  final Color color;
-  final double height;
-
-  Bar({required this.color, required this.height});
+  const BarChart({
+    Key? key,
+    required this.hobbies,
+    required this.hoursSpent,
+    required this.onBarTapped,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final maxHeight = MediaQuery.of(context).size.height * 0.4;
+    final maxHours = hoursSpent.reduce((a, b) => a > b ? a : b);
+
     return Container(
-      width: 30,
-      height: height,
-      color: color,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: List.generate(hobbies.length, (index) {
+          final double barHeight = (hoursSpent[index] / maxHours) * maxHeight;
+          final Color barColor =
+          Colors.primaries[index % Colors.primaries.length];
+
+          return GestureDetector(
+            onTap: () => onBarTapped(index),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Tooltip(
+                  message: '${hoursSpent[index]} hours',
+                  child: Container(
+                    width: 30,
+                    height: barHeight,
+                    decoration: BoxDecoration(
+                      color: barColor,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  hobbies[index],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
     );
   }
 }

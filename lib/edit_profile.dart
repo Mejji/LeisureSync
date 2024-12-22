@@ -203,7 +203,7 @@ class _edit_profileState extends State<edit_profile> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => progress_tracker(username: widget.username),
+                  builder: (context) => ProgressTracker(username: widget.username),
                 ),
               );
               break;

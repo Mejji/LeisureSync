@@ -217,22 +217,23 @@ class  _Creative_hfState  extends State<Creative_hf> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.groups, color: Colors.blue),
+            label: 'hobbies',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.music_note, color: Colors.blue),
+            icon: Icon(Icons.calendar_today, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Icons.notifications, color: Colors.grey),
             label: '',
           ),
         ],
+        backgroundColor: const Color(0xFF00AFDF),
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
@@ -240,15 +241,20 @@ class  _Creative_hfState  extends State<Creative_hf> {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => progress_tracker(username: widget.username)),
+                MaterialPageRoute(builder: (context) => ProgressTracker(username: widget.username)),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username), // Use the global variable
-                ),
+                MaterialPageRoute(builder: (context) => HobbyManagement(username: widget.username)),
+              );
+              break;
+            case 2: // Home screen case
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
+                    (Route<dynamic> route) => false, // Remove all previous screens
               );
               break;
             case 3:
@@ -260,7 +266,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  NotificationCenter(username: widget.username)),
+                MaterialPageRoute(builder: (context) => NotificationCenter(username: widget.username)),
               );
               break;
           }
