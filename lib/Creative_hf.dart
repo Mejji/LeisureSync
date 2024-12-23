@@ -217,7 +217,7 @@ class  _Creative_hfState  extends State<Creative_hf> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.blue),
+            icon: Icon(Icons.local_activity, color: Colors.blue),
             label: 'hobbies',
           ),
           BottomNavigationBarItem(

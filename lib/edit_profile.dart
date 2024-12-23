@@ -190,7 +190,7 @@ class _edit_profileState extends State<edit_profile> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart, color: Colors.grey), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.group, color: Colors.grey), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.local_activity, color: Colors.grey), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.settings, color: Colors.blue), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_today, color: Colors.grey), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.notifications, color: Colors.grey), label: ''),

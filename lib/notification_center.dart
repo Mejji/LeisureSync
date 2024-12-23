@@ -133,7 +133,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.grey),
+            icon: Icon(Icons.local_activity, color: Colors.grey),
             label: 'hobbies',
           ),
           BottomNavigationBarItem(
