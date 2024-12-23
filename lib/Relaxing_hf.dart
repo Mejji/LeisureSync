@@ -233,7 +233,7 @@ class _Relaxing_hfState extends State<Relaxing_hf> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.blue),
+            icon: Icon(Icons.local_activity, color: Colors.blue),
             label: 'hobbies',
           ),
           BottomNavigationBarItem(

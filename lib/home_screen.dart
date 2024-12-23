@@ -20,6 +20,8 @@ class home_screen extends StatefulWidget {
 class _home_screenState extends State<home_screen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF00AFDF),
@@ -96,20 +98,25 @@ class _home_screenState extends State<home_screen> {
           children: [
             Text(
               'Welcome, ${widget.username}', // Display username here
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: size.width * 0.06, // Responsive font size
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: size.height * 0.02),
             CircleAvatar(
-              radius: 100, // Made the CircleAvatar larger
-              backgroundImage: AssetImage('images/chillguy.png'), // Use backgroundImage to display an image
+              radius: size.width * 0.3, // Responsive size for the avatar
+              backgroundImage: AssetImage('images/chillguy.png'),
             ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+            SizedBox(height: size.height * 0.02),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
               child: Text(
                 "It's a brand new day full of possibilities, let's own it! Gear up, set the vibe, and make it amazing! 🎉🚀✨",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: size.width * 0.04, // Responsive font size
+                ),
               ),
             ),
           ],
@@ -119,23 +126,23 @@ class _home_screenState extends State<home_screen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart, color: Colors.grey),
-            label: '',
+            label: '', // Removed the label
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups),
-            label: '',
+            icon: Icon(Icons.local_activity, color: Colors.grey),
+            label: '', // Removed the label
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.blue),
-            label: 'Home',
+            label: '', // Removed the label
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: '',
+            icon: Icon(Icons.calendar_today, color: Colors.grey),
+            label: '', // Removed the label
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: '',
+            icon: Icon(Icons.notifications, color: Colors.grey),
+            label: '', // Removed the label
           ),
         ],
         backgroundColor: const Color(0xFF00AFDF),
@@ -177,9 +184,10 @@ class _home_screenState extends State<home_screen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => NotificationCenter(
-                      username: widget.username,
-                    )),
+                  builder: (context) => NotificationCenter(
+                    username: widget.username,
+                  ),
+                ),
               );
               break;
           }

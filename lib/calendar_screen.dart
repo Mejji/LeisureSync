@@ -104,7 +104,7 @@ class _CalendarScreenState extends State<calendar_screen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.grey),
+            icon: Icon(Icons.local_activity, color: Colors.grey),
             label: '',
           ),
           BottomNavigationBarItem(

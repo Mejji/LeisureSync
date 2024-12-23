@@ -4,8 +4,8 @@ import 'progress_tracker.dart';
 import 'hobby_management.dart';
 import 'calendar_screen.dart';
 import 'notification_center.dart';
-import 'edit_profile.dart'; // Import the edit_profile screen
-import 'login_screen.dart'; // Import the login_screen
+import 'edit_profile.dart';
+import 'login_screen.dart';
 import 'home_screen.dart';
 
 class Developers extends StatefulWidget {
@@ -29,7 +29,7 @@ class _DevelopersState extends State<Developers> {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(widget.username), // Use widget.username here
+              accountName: Text(widget.username),
               accountEmail: null,
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('images/chillguy.png'),
@@ -43,7 +43,7 @@ class _DevelopersState extends State<Developers> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => home_screen(username: widget.username)), // Use widget.username
+                  MaterialPageRoute(builder: (context) => home_screen(username: widget.username)),
                 );
               },
             ),
@@ -52,16 +52,14 @@ class _DevelopersState extends State<Developers> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => edit_profile(username: widget.username)), // Use widget.username
+                  MaterialPageRoute(builder: (context) => edit_profile(username: widget.username)),
                 );
               },
             ),
             ListTile(
               title: const Text('Logout'),
               onTap: () async {
-                // Sign out using Firebase
                 await FirebaseAuth.instance.signOut();
-                // Navigate to LoginScreen after signing out
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -109,11 +107,26 @@ class _DevelopersState extends State<Developers> {
               ),
             ),
             const SizedBox(height: 30),
-            DeveloperTile(name: 'Mark Josh Alvear', imagePath: 'images/Mj.png'),
-            const SizedBox(height: 30), // Add space between developers
-            DeveloperTile(name: 'Nigel Jan L. Naniong', imagePath: 'images/Nigel.png'),
-            const SizedBox(height: 30), // Add space between developers
-            DeveloperTile(name: 'Andrei Christian Tonido', imagePath: 'images/drei.png'),
+            DeveloperTile(
+              name: 'Mark Josh Alvear',
+              imagePath: 'images/Mj.png',
+              role: 'Back End and Database Management',
+              email: 'markjosh.alvear.cics@ust.edu.ph',
+            ),
+            const SizedBox(height: 30),
+            DeveloperTile(
+              name: 'Nigel Jan L. Naniong',
+              imagePath: 'images/Nigel.png',
+              role: 'Front End Design and Back End',
+              email: 'nigeljan.naniong.cics@ust.edu.ph',
+            ),
+            const SizedBox(height: 30),
+            DeveloperTile(
+              name: 'Andrei Christian Tonido',
+              imagePath: 'images/drei.png',
+              role: 'Front End Design and Quality Assurance',
+              email: 'andreichristian.Tonido.cics@ust.edu.ph',
+            ),
           ],
         ),
       ),
@@ -124,7 +137,7 @@ class _DevelopersState extends State<Developers> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups),
+            icon: Icon(Icons.local_activity),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -149,7 +162,7 @@ class _DevelopersState extends State<Developers> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => home_screen(username: widget.username), // Use widget.username
+                  builder: (context) => home_screen(username: widget.username),
                 ),
               );
               break;
@@ -157,7 +170,7 @@ class _DevelopersState extends State<Developers> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HobbyManagement(username: widget.username), // Use widget.username
+                  builder: (context) => HobbyManagement(username: widget.username),
                 ),
               );
               break;
@@ -165,7 +178,7 @@ class _DevelopersState extends State<Developers> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => calendar_screen(username: widget.username), // Use widget.username
+                  builder: (context) => calendar_screen(username: widget.username),
                 ),
               );
               break;
@@ -173,7 +186,7 @@ class _DevelopersState extends State<Developers> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NotificationCenter(username: widget.username), // Use widget.username
+                  builder: (context) => NotificationCenter(username: widget.username),
                 ),
               );
               break;
@@ -187,8 +200,15 @@ class _DevelopersState extends State<Developers> {
 class DeveloperTile extends StatelessWidget {
   final String name;
   final String imagePath;
+  final String role;
+  final String email;
 
-  DeveloperTile({required this.name, required this.imagePath});
+  DeveloperTile({
+    required this.name,
+    required this.imagePath,
+    required this.role,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +219,13 @@ class DeveloperTile extends StatelessWidget {
         backgroundImage: AssetImage(imagePath),
       ),
       title: Text(name),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(role),
+          Text(email, style: TextStyle(fontSize: 12, color: Colors.grey[700])),
+        ],
+      ),
     );
   }
 }

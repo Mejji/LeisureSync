@@ -158,7 +158,7 @@ class _HobbyManagementState extends State<HobbyManagement> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.blue),
+            icon: Icon(Icons.local_activity, color: Colors.blue),
             label: 'hobbies',
           ),
           BottomNavigationBarItem(

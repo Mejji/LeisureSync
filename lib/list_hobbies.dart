@@ -163,7 +163,7 @@ class _ListHobbiesState extends State<ListHobbies> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups, color: Colors.blue),
+            icon: Icon(Icons.local_activity, color: Colors.blue),
             label: 'hobbies',
           ),
           BottomNavigationBarItem(
